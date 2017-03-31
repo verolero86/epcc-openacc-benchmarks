@@ -290,100 +290,100 @@ double parallel_if(){
 
 
 
-double parallel_private(){
-
-
-  extern unsigned int datasize;
-  unsigned int n = (unsigned int)(datasize/sizeof(uint8_t));
-  unsigned int ppn = (unsigned int)(n/256);
-  unsigned int i = 0;
-  double t1_start = 0;
-  double t1_end = 0;
-  double t2_start = 0;
-  double t2_end = 0;
-  uint8_t *a = NULL;
-  uint8_t *z = NULL;
-
-  a = (uint8_t *)malloc(ppn*sizeof(uint8_t));
-  z = (uint8_t*)malloc(ppn*sizeof(uint8_t));
-  if (a==NULL||z==NULL){
-    /* Something went wrong in the memory allocation here, fail gracefully */
-    return(-10000);
-  }
-
-
-
-  t1_start = omp_get_wtime();
-#pragma acc parallel loop create(a[0:ppn],z[0:ppn]), num_gangs(256)
-  for (i=0;i<ppn;i++){
-    a[i] = i;
-    z[i] = i;
-  }
-  t1_end = omp_get_wtime();
-
-
-  t2_start = omp_get_wtime();
-#pragma acc parallel loop create(a[0:ppn]), private(z[0:ppn]), num_gangs(256)
-  for (i=0;i<ppn;i++){
-    a[i] = i;
-    z[i] = i;
-  }
-  t2_end = omp_get_wtime();
-
-  free(a);
-  free(z);
-  return( (t2_end-t2_start) - (t1_end-t1_start) );
-
-}
-
-
-
-double parallel_firstprivate(){
-
-  extern unsigned int datasize;
-  unsigned int i = 0;
-  unsigned int n = (int)(datasize/sizeof(uint8_t));
-  uint8_t *a = NULL;
-  uint8_t *z = NULL;
-  double t1_start = 0;
-  double t1_end = 0;
-  double t2_start = 0;
-  double t2_end = 0;
-
-  a = (uint8_t *)malloc(n*sizeof(uint8_t));
-  z = (uint8_t*)malloc(n*sizeof(uint8_t));
-
-  if (a==NULL){
-    /* Something went wrong in the memory allocation here, fail gracefully */
-    return(-10000);
-  }
-
-  for (i=0;i<n;i++){
-    z[i] = (uint8_t)rand();
-  }
-
-
-
-  t1_start = omp_get_wtime();
-#pragma acc parallel loop create(a[0:n]) copyin(z[0:n])
-  for (i=0;i<n;i++){
-    a[i] = z[i];
-  }
-  t1_end = omp_get_wtime();
-
-
-
-  t2_start = omp_get_wtime();
-#pragma acc parallel loop create(a[0:n]), firstprivate(z[0:n])
-  for (i=0;i<n;i++){
-    a[i] = z[i];
-  }
-  t2_end = omp_get_wtime();
-
-  free(a);
-  free(z);
-  return( (t2_end-t2_start) - (t1_end-t1_start) );
-}
+//double parallel_private(){
+//
+//
+//  extern unsigned int datasize;
+//  unsigned int n = (unsigned int)(datasize/sizeof(uint8_t));
+//  unsigned int ppn = (unsigned int)(n/256);
+//  unsigned int i = 0;
+//  double t1_start = 0;
+//  double t1_end = 0;
+//  double t2_start = 0;
+//  double t2_end = 0;
+//  uint8_t *a = NULL;
+//  uint8_t *z = NULL;
+//
+//  a = (uint8_t *)malloc(ppn*sizeof(uint8_t));
+//  z = (uint8_t*)malloc(ppn*sizeof(uint8_t));
+//  if (a==NULL||z==NULL){
+//    /* Something went wrong in the memory allocation here, fail gracefully */
+//    return(-10000);
+//  }
+//
+//
+//
+//  t1_start = omp_get_wtime();
+//#pragma acc parallel loop create(a[0:ppn],z[0:ppn]), num_gangs(256)
+//  for (i=0;i<ppn;i++){
+//    a[i] = i;
+//    z[i] = i;
+//  }
+//  t1_end = omp_get_wtime();
+//
+//
+//  t2_start = omp_get_wtime();
+//#pragma acc parallel loop create(a[0:ppn]), private(z[0:ppn]), num_gangs(256)
+//  for (i=0;i<ppn;i++){
+//    a[i] = i;
+//    z[i] = i;
+//  }
+//  t2_end = omp_get_wtime();
+//
+//  free(a);
+//  free(z);
+//  return( (t2_end-t2_start) - (t1_end-t1_start) );
+//
+//}
+//
+//
+//
+//double parallel_firstprivate(){
+//
+//  extern unsigned int datasize;
+//  unsigned int i = 0;
+//  unsigned int n = (int)(datasize/sizeof(uint8_t));
+//  uint8_t *a = NULL;
+//  uint8_t *z = NULL;
+//  double t1_start = 0;
+//  double t1_end = 0;
+//  double t2_start = 0;
+//  double t2_end = 0;
+//
+//  a = (uint8_t *)malloc(n*sizeof(uint8_t));
+//  z = (uint8_t*)malloc(n*sizeof(uint8_t));
+//
+//  if (a==NULL){
+//    /* Something went wrong in the memory allocation here, fail gracefully */
+//    return(-10000);
+//  }
+//
+//  for (i=0;i<n;i++){
+//    z[i] = (uint8_t)rand();
+//  }
+//
+//
+//
+//  t1_start = omp_get_wtime();
+//#pragma acc parallel loop create(a[0:n]) copyin(z[0:n])
+//  for (i=0;i<n;i++){
+//    a[i] = z[i];
+//  }
+//  t1_end = omp_get_wtime();
+//
+//
+//
+//  t2_start = omp_get_wtime();
+//#pragma acc parallel loop create(a[0:n]), firstprivate(z[0:n])
+//  for (i=0;i<n;i++){
+//    a[i] = z[i];
+//  }
+//  t2_end = omp_get_wtime();
+//
+//  free(a);
+//  free(z);
+//  return( (t2_end-t2_start) - (t1_end-t1_start) );
+//}
 
 
 
