@@ -1295,7 +1295,7 @@ double gemm(){
   t_start = omp_get_wtime();
 #pragma acc data copyin(A[0:n*n],B[0:n*n]), copy(C[0:n*n])
   {
-#pragma acc kernels
+#pragma acc parallel
 #pragma acc loop independent
     for (i = 0; i < n; i++){
 #pragma acc loop independent
@@ -1377,7 +1377,7 @@ double twodconv(){
   t_start = omp_get_wtime();
 #pragma acc data copyin(A[0:n*n]), copyout(B_Gpu[0:n*n])
   {
-#pragma acc kernels
+#pragma acc parallel
 #pragma acc loop independent
     for (i = 1; i < n - 1; i++){ // 0
       for (j = 1; j < n - 1; j++){ // 1
@@ -1463,7 +1463,7 @@ double threedconv(){
   t_start = omp_get_wtime();
 #pragma acc data copyin(A[0:n*n*n]), copyout(B_Gpu[0:n*n*n])
   {
-#pragma acc kernels
+#pragma acc parallel
 #pragma acc loop independent
     for (i = 1; i < n - 1; i++){ /* 0 */
       for (j = 1; j < n - 1; j++){ /* 1 */
