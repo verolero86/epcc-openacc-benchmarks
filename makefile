@@ -18,9 +18,21 @@ ifeq ($(COMP),pgi)
 CC = pgcc
 CFLAGS = -acc -Minfo=accel -mcmodel=medium
 LFLAGS = 
+else ifeq ($(COMP),pgihost)
+CC = pgcc
+CFLAGS = -acc -Minfo=accel -ta=host -mcmodel=medium
+LFLAGS = 
 else ifeq ($(COMP),craypgi)
 CC = cc
 CFLAGS = -acc -Minfo=accel -mcmodel=medium
+LFLAGS = 
+else ifeq ($(COMP),craypgidbg)
+CC = cc
+CFLAGS = -g -Mbounds -Mchkptr
+LFLAGS = 
+else ifeq ($(COMP),craygcc)
+CC = cc
+CFLAGS = -fopenacc -ffast-math -lm -foffload=-lm
 LFLAGS = 
 else ifeq ($(COMP),hmpp)
 CC = hmpp --hdpp-off --color gcc
