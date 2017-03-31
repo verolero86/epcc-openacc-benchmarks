@@ -56,20 +56,20 @@ int main(int argc, char **argv) {
   sprintf(testName, "SlicedH2D");
   benchmark(testName, &sliced_htod);
 
-  sprintf(testName, "Kernels_If");
-  benchmark(testName, &kernels_if);
+  //sprintf(testName, "Kernels_If");
+  //benchmark(testName, &kernels_if);
 
   sprintf(testName, "Parallel_If");
   benchmark(testName, &parallel_if);
 
-  sprintf(testName, "Parallel_private");
-  benchmark(testName, &parallel_private);
+  //sprintf(testName, "Parallel_private");
+  //benchmark(testName, &parallel_private);
 
-  sprintf(testName, "Parallel_1stprivate");
-  benchmark(testName, &parallel_firstprivate);
+  //sprintf(testName, "Parallel_1stprivate");
+  //benchmark(testName, &parallel_firstprivate);
 
-  sprintf(testName, "Kernels_combined");
-  benchmark(testName, &kernels_combined);
+  //sprintf(testName, "Kernels_combined");
+  //benchmark(testName, &kernels_combined);
  
   sprintf(testName, "Parallel_combined");
   benchmark(testName, &parallel_combined);
@@ -77,8 +77,8 @@ int main(int argc, char **argv) {
   sprintf(testName, "Update_Host");
   benchmark(testName, &update);
 
-  sprintf(testName, "Kernels_Invocation");
-  benchmark(testName, &kernels_invoc);
+  //sprintf(testName, "Kernels_Invocation");
+  //benchmark(testName, &kernels_invoc);
 
   sprintf(testName, "Parallel_Invocation");
   benchmark(testName, &parallel_invoc);
@@ -86,8 +86,8 @@ int main(int argc, char **argv) {
   sprintf(testName, "Parallel_Reduction");
   benchmark(testName, &parallel_reduction);
 
-  sprintf(testName, "Kernels_Reduction");
-  benchmark(testName, &kernels_reduction);
+  //sprintf(testName, "Kernels_Reduction");
+  //benchmark(testName, &kernels_reduction);
 
   /* Level 1 Tests - BLAS-esque kernels */
 
@@ -132,14 +132,14 @@ int main(int argc, char **argv) {
 
   /* Level 2 Tests - small applications */
 
-  sprintf(testName, "27S");
-  benchmark(testName, &stencil);
+  //sprintf(testName, "27S");
+  //benchmark(testName, &stencil);
 
-  sprintf(testName, "LE2D");
-  benchmark(testName, &le_main);
+  //sprintf(testName, "LE2D");
+  //benchmark(testName, &le_main);
 
-  sprintf(testName, "HIMENO");
-  benchmark(testName, &himeno_main);
+  //sprintf(testName, "HIMENO");
+  //benchmark(testName, &himeno_main);
 
   /* Print results & free results storage */
   finalise();
